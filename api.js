@@ -14,6 +14,4 @@ routeFiles.forEach(function(file) {
 	route.init(server);
 });
 
-server.listen(8080, function() {
-	console.log('Server listening on ' + server.url);
-});
+exports.server = server;

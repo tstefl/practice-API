@@ -1,0 +1,33 @@
+<%-include header.html %>
+	<div id="message" style="display:none;"></div>
+	<form name="create-form" action="/api/patients" method="POST">
+		<input type="text" name="firstName" placeholder="First name" /><br /><br />
+		<input type="text" name="lastName" placeholder="Last name" /><br /><br />
+		<textarea name="description" width="300px" height="400px"></textarea><br /><br />
+		<input type="submit" name="createSubmit" value="Create patient" />
+	</form>
+	<script>
+		$('input[name="createSubmit"]').on('click', function(e) {
+			e.preventDefault();
+			$('#message').hide();
+
+			var request = $.ajax({
+				url: '/api/patients',
+				type: 'POST',
+				data: {
+					firstName: $('input[name="firstName"]').val(),
+					lastName: $('input[name="lastName"]').val(),
+					description: $('textarea[name="description"]').val()
+				}
+			});
+
+			request.done(function(data, textStatus, errorThrown) {
+				$('#message').text('Patient created').show();
+			});
+
+			request.fail(function(jqXhr, textStatus, errorThrown) {
+				$('#message').text('Error: ' + errorThrown).show();
+			});
+		});
+	</script>
+<%-include footer.html %>

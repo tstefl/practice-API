@@ -4,13 +4,14 @@ var fs = require('fs'),
 	Patient = require('../models/patient').model;
 
 exports.init = function(server) {
-	mongoose.connect('mongodb://localhost/patients');
+	server.get('/', function(req, res, next) {
+		Patient.find({}, function(err, docs) {
+			res.render('index.html', { title: 'List Patients!', patients: docs });
+			next();
+		});
+	});
 
-	server.get('/', function(req, res) {
-		patients = [
-			new Patient({ firstName: 'fred', lastName: 'smith', description: 'super sweet' })
-		];
-
-		res.render('index.html', { title: 'Test title', patients: patients });
+	server.get('/patient/create', function(req, res, next) {
+		res.render('create.html', { title: 'Create Patients!' });
 	});
 };
