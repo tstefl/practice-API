@@ -1,16 +1,16 @@
 var fs = require('fs'),
-	path = require('path');
+	path = require('path'),
+	mongoose = require('mongoose'),
+	Patient = require('../models/patient').model;
 
-exports.init = function(server){
+exports.init = function(server) {
+	mongoose.connect('mongodb://localhost/patients');
 
-	server.get('/', function(req,res){
-		body = fs.readFileSync(path.resolve('./', 'views', 'index.html'), {encoding: 'utf8'});
-		res.writeHead(200,{
-			'Content-Length': Buffer.byteLength(body),
-			'Content-Type'  : 'text/html'
-		});
+	server.get('/', function(req, res) {
+		patients = [
+			new Patient({ firstName: 'fred', lastName: 'smith', description: 'super sweet' })
+		];
 
-		res.end(body);
+		res.render('index.html', { title: 'Test title', patients: patients });
 	});
-
 };
