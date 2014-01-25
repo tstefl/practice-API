@@ -1,0 +1,15 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+nav.main {
+	border-bottom: 1px dashed #eee;
+	padding: 8px;
+}
+
+.horizontal-list,
+.horizontal-list li {
+	display: inline-block;
+}
